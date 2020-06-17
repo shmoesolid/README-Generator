@@ -8,7 +8,7 @@ const rl = readline.createInterface({
 // array of questions for user
 const questions = [];
 
-const Q_TYPES = {};
+const Q_TYPE = Object.freeze({ input:0, yesno:1 });
 
 // Question object
 function Question(_ques, _type, _header, _required=true)
@@ -21,10 +21,10 @@ function Question(_ques, _type, _header, _required=true)
 }
 
 questions.push(new Question(
-	"What is the title of your project?",
-	"",
-	"# ",
-	true
+	"What is the title of your project?", // question
+	Q_TYPE.input, // type
+	"# ", // header
+	true // required
 ));
 
 
@@ -64,13 +64,22 @@ function nextQuestion()
 	{
 		// close readline inputs and return
 		rl.close();
-		return;
+		return; // not sure if needed
 	}
 	
 	// ask current question
 	askQuestion(currentQuestionIndex);
 	
 }
+
+rl.on("close", function()
+{
+	// .. generate markup
+	// .. closing remarks
+	
+	// end process
+	process.exit(0);
+});
 
 // function to initialize program
 function init() 

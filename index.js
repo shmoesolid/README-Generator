@@ -1,6 +1,11 @@
 // array of questions for user
-const questions = [
-
+const questions = 
+[
+	{
+		q:"Title?",
+		required:true,
+		type:""
+	}
 ];
 
 // function to write README file

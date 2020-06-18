@@ -1,10 +1,14 @@
 
+// includes
 const fs = require("fs");
 const inquirer = require("inquirer");
 const generateMarkdown = require("./utils/generateMarkdown");
 
-const FILENAME = "README_generated.md";
+// generated file info
+const FILEPATH = "./generated/";
+const FILENAME = "README_"+ Math.floor(new Date() / 1000) +".md";
 
+// question prompts/types
 const questions = 
 [
 	{
@@ -22,7 +26,7 @@ const questions =
 		type: 'editor',
 	},
 	{
-		name: 'useage',
+		name: 'usage',
 		message: 'How do you use your project?',
 		type: 'editor',
 	},
@@ -41,22 +45,30 @@ const questions =
 	},
 ];
 
-// function to write README file
+/**
+ * writes the readme file 
+ * 
+ * @param {string} fn 
+ * @param {object} data 
+ */
 function writeToFile(fn, data) 
 {
-	fs.writeFile(fn, data, 'utf-8', (err) =>
-	{
-		if (err) throw err;
-	});
+	fs.writeFile(fn, data, 'utf-8', (err) => { if (err) throw err; });
 }
 
-// function to initialize program
+/**
+ * initialize application
+ */
 function init() 
 {
 	// say hello
 	console.log(
-		"\nWelcome to the amazing README markdown generator!\n" +
-		"Your generated file will be called '"+ FILENAME +"'...\n"
+		"\n" +
+		"*****************************\n" +
+		"Welcome to the amazing README markdown generator!\n\n" +
+		"Your generated file will be called '"+ FILENAME +"'\n" +
+		"It will be located in '"+ FILEPATH +"'\n\n" +
+		"*****************************\n"
 	);
 	
 	// run inquirer
@@ -65,7 +77,7 @@ function init()
 		.then(answers =>
 		{
 			var mdData = generateMarkdown(answers);
-			writeToFile(FILENAME, mdData);
+			writeToFile(FILEPATH + FILENAME, mdData);
 		})
 		.catch( error => console.log(error) );
 }

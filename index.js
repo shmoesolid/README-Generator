@@ -11,7 +11,6 @@ const questions =
 		name: 'title',
 		message: 'What is the title of your project?',
 	},
-	/*
 	{
 		name: 'description',
 		message: 'What is the description of your project?',
@@ -35,7 +34,6 @@ const questions =
 		name: 'license',
 		message: 'What license is this under?',
 	},
-	*/
 	{
 		name:'toc',
 		message: 'Do you want a table of contents?',

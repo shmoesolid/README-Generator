@@ -39,8 +39,13 @@ const questions =
 		message: 'What license is this under?',
 	},
 	{
-		name:'toc',
+		name: 'toc',
 		message: 'Do you want a table of contents?',
+		type: 'confirm',
+	},
+	{
+		name: 'display',
+		message: 'Would you like to display your file in this console?',
 		type: 'confirm',
 	},
 ];
@@ -76,8 +81,13 @@ function init()
 		.prompt(questions)
 		.then(answers =>
 		{
+			// generated data and write to file
 			var mdData = generateMarkdown(answers);
 			writeToFile(FILEPATH + FILENAME, mdData);
+
+			// also display in console if desired
+			if (answers.display)
+				console.log("\nYour file will look like:\n\n" + mdData);
 		})
 		.catch( error => console.log(error) );
 }

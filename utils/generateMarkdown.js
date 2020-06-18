@@ -19,7 +19,7 @@ function generateMarkdown(data)
 	if (data.install) 	s += `## Installation\n\n${data.install}\n\n`;
 	if (data.usage) 	s += `## Usage\n\n${data.usage}\n\n`;
 	if (data.contrib) 	s += `## Credits\n\n${data.contrib}\n\n`;
-	if (data.license) 	s += `## License\n\n${data.license}\n\n`;
+	if (data.license) 	s += `## License\n\n${data.license}\n`;
 	
 	// return the string
 	return s;

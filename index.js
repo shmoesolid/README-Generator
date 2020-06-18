@@ -52,6 +52,26 @@ function askQuestion(index)
 	
 	// ask and get input
 	rl.question(current.ques +"\n", data => cb_input(data) );
+	
+	var input = [];
+
+	rl.prompt();
+
+	rl.on("line", function(cmd)
+	{
+		input.push(cmd);
+	});
+
+	rl.on("close", function()
+	{
+		// .. generate markup
+		// .. closing remarks
+	
+		console.log(input.join('\n'));
+	
+		// end process
+		process.exit(0);
+	});
 }
 
 function nextQuestion()
@@ -71,15 +91,6 @@ function nextQuestion()
 	askQuestion(currentQuestionIndex);
 	
 }
-
-rl.on("close", function()
-{
-	// .. generate markup
-	// .. closing remarks
-	
-	// end process
-	process.exit(0);
-});
 
 // function to initialize program
 function init() 

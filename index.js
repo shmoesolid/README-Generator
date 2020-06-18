@@ -1,107 +1,69 @@
-// setup for std input
-const readline = require("readline");
-const rl = readline.createInterface({
-	input: process.stdin,
-	output: process.stdout
-});
 
-// array of questions for user
-const questions = [];
+const fs = require("fs");
+const inquirer = require("inquirer");
+const generateMarkdown = require("./utils/generateMarkdown");
 
-const Q_TYPE = Object.freeze({ input:0, yesno:1 });
-
-// Question object
-function Question(_ques, _type, _header, _required=true)
-{
-	this.ques = _ques;
-	this.type = _type;
-	this.header = _header;
-	this.required = _required; 
-	this.answer = "";
-}
-
-questions.push(new Question(
-	"What is the title of your project?", // question
-	Q_TYPE.input, // type
-	"# ", // header
-	true // required
-));
-
-
-var currentQuestionIndex = -1;
+const questions = 
+[
+	{
+		name: 'title',
+		message: 'What is the title of your project?',
+	},
+	{
+		name: 'description',
+		message: 'What is the description of your project?',
+		type: 'editor',
+	},
+	// {
+	// 	name: 'install',
+	// 	message: 'How do you install your project?',
+	// 	type: 'editor',
+	// },
+	// {
+	// 	name: 'useage',
+	// 	message: 'How do you use your project?',
+	// 	type: 'editor',
+	// },
+	// {
+	// 	name: 'contrib',
+	// 	message: 'Who contributed?',
+	// },
+];
 
 // function to write README file
 function writeToFile(fileName, data) 
 {
-	
-}
-
-function cb_input(data)
-{
-	console.log(`entered: ${data}`);
-	
-	// .. do stuff with the data entered
-	
-	nextQuestion();
-}
-
-function askQuestion(index)
-{
-	// establish
-	var current = questions[index];
-	
-	// ask and get input
-	rl.question(current.ques +"\n", data => cb_input(data) );
-	
-	var input = [];
-
-	rl.prompt();
-
-	rl.on("line", function(cmd)
-	{
-		input.push(cmd);
+	/*
+	fs.appendFile("log.txt", logTxt, "utf-8", (err) => {
+      if (err) throw err;
 	});
-
-	rl.on("close", function()
+	*/
+	fs.writeFile(fileName, data, 'utf-8', (err) =>
 	{
-		// .. generate markup
-		// .. closing remarks
-	
-		console.log(input.join('\n'));
-	
-		// end process
-		process.exit(0);
+		if (err) throw err;
+		//process.exit(0);
 	});
-}
-
-function nextQuestion()
-{
-	// increase
-	currentQuestionIndex++;
-	
-	// check if we reached the end
-	if (currentQuestionIndex == questions.length)
-	{
-		// close readline inputs and return
-		rl.close();
-		return; // not sure if needed
-	}
-	
-	// ask current question
-	askQuestion(currentQuestionIndex);
-	
 }
 
 // function to initialize program
 function init() 
 {
-	console.log
-	(
-		`Welcome to the README markdown generator!\n`
-
-	);
+	// say hello
+	console.log(`Welcome to the amazing README markdown generator!\n`);
 	
-	nextQuestion();
+	// run inquirer
+	inquirer
+		.prompt(questions)
+		.then(answers =>
+		{
+			var mdData = generateMarkdown(answers);
+			writeToFile("README.md", mdData);
+		})
+		.catch(error => 
+		{
+			console.log(error);
+			//process.exit(0);
+		});
 }
 
 // function call to initialize program

@@ -1,30 +1,32 @@
 // function to generate markdown for README
-/*function generateMarkdown(data) 
-{
-	return ""+
-		"## " + data.title +
-		"# " + data.description;
-}*/
-
-// function to generate markdown for README
 function generateMarkdown(data) 
 {
-	return `# ${data.title}
+	// title and description
+	var s = 
+`# ${data.title}
 
 ## Description
 
 ${data.description}
 `;
-}
 
-function generateMarkdown(data) 
-{
-	return `# ${data.title}
+	// table of contents
+	if (data.toc)
+	{
+		s += 
+`
+## Table of Contents
 
-## Description
+* [Installation](#installation)
+* [Usage](#usage)
+* [Credits](#credits)
+* [License](#license)
+`;
+	}
 
-${data.description}
-
+	// continue with the rest
+	s += 
+`
 ## Installation
 
 ${data.install}
@@ -33,10 +35,18 @@ ${data.install}
 
 ${data.usage}
 
-## Contributions
+## Credits
 
 ${data.contrib}
+
+## License
+
+${data.license}
+
 `;
+	
+	// return the string
+	return s;
 }
 
 

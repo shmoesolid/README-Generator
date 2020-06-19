@@ -75,7 +75,10 @@ function init()
 		"It will be located in '"+ FILEPATH +"'\n\n" +
 		"*****************************\n"
 	);
-	
+
+	// make directory if doesn't exist
+	fs.mkdir(FILEPATH, {recursive: true}, (err) => { if (err) throw err; });
+
 	// run inquirer
 	inquirer
 		.prompt(questions)

@@ -27,14 +27,12 @@ This is UTSA Coding Bootcamp's week #9 homework that generates a project README 
 - Navigate to this project's folder (with index.js)
 - Run command "npm install" (without quotes)
 
-
 ## Usage
 
 - Run command "node index.js" (without quotes)
 - Follow prompts and answer ths questions presented
-- When completed, a file named README_<timestamp>.md is created in generated folder
+- When completed, a file named README_timestamp.md is created in generated folder
 - Do what you will with the contents
-
 
 ## Credits
 
